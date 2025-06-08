@@ -71,3 +71,15 @@ fn test_cli_negative_days_elapsed() {
         .expect("run binary");
     assert!(!output.status.success());
 }
+
+#[test]
+fn test_cli_positive_days_elapsed() {
+    let bin = env!("CARGO_BIN_EXE_dairyshop");
+    let path = format!("{}/tests/herd.xml", env!("CARGO_MANIFEST_DIR"));
+    let output = Command::new(bin)
+        .arg(&path)
+        .arg("13")
+        .output()
+        .expect("run binary");
+    assert!(output.status.success());
+}
