@@ -11,7 +11,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let file_path = &args[1];
-    let days_elapsed: u32 = args[2].parse()?;
+    let days_elapsed: u32 = match args[2].parse() {
+        Ok(d) => d,
+        Err(_) => {
+            eprintln!("{} must be a positive integer", args[2]);
+            std::process::exit(1);
+        }
+    };
 
     let herd = parser::parse_herd_xml(file_path)?;
     let stock = herd.calculate_stock(days_elapsed);
