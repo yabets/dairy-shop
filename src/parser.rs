@@ -1,5 +1,4 @@
 use crate::models::{Herd, Yak};
-use quick_xml::Reader;
 use quick_xml::de::from_str;
 use serde::Deserialize;
 use std::fs::File;
@@ -42,12 +41,9 @@ pub fn parse_herd_xml(file_path: &str) -> Result<Herd, Box<dyn std::error::Error
     let mut file = File::open(file_path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-    dbg!(&contents);
 
-    let mut reader = Reader::from_str(&contents);
-    reader.config_mut().trim_text(true);
-
-    let result: HerdXml = from_str(&contents).unwrap();
+    // trim text nodes to match expected deserialization format
+    let result: HerdXml = from_str(&contents)?;
 
     let herd = Herd::from(result);
 
