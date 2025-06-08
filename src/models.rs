@@ -26,43 +26,11 @@ impl Yak {
             return false;
         }
 
-        // A yak must be at least 1-year-old to be shaved
-        let initial_age_days = (self.initial_age_years * 100.0) as u32;
-        if initial_age_days + day < 100 {
-            return false;
-        }
-
-        // Find the most recent day this yak was shaved
-        let mut last_shave_day = None;
-        for previous_day in 0..day {
-            if self.can_be_shaved_on_day(previous_day) {
-                last_shave_day = Some(previous_day);
-            }
-        }
-
-        // Check if the yak can be shaved today
-        self.can_be_shaved_on_day(day)
-            && (last_shave_day.is_none()
-                || day - last_shave_day.unwrap() >= self.shave_interval(last_shave_day.unwrap()))
-    }
-
-    fn can_be_shaved_on_day(&self, day: u32) -> bool {
+        // Yaks must be at least 1 year (100 days) old to be shaved
         let age_days = (self.initial_age_years * 100.0) as u32 + day;
-
-        // A yak must be at least 1 year (100 days) old to be shaved
-        if age_days < 100 {
-            return false;
-        }
-
-        // Calculate if enough days have passed since the last possible shave
-        if day == 0 {
-            // On day 0, all eligible yaks can be shaved
-            return true;
-        }
-
-        // Otherwise, we need to check intervals
-        self.is_alive(day)
+        age_days >= 100
     }
+
 
     fn shave_interval(&self, day: u32) -> u32 {
         let age_days = (self.initial_age_years * 100.0) as u32 + day;
@@ -109,7 +77,7 @@ impl Herd {
                     for prev_day in (0..day).rev() {
                         if shaved_days[prev_day as usize].contains(&yak.name) {
                             let interval = yak.shave_interval(prev_day);
-                            if day - prev_day < interval {
+                            if day - prev_day <= interval {
                                 can_be_shaved = false;
                                 break;
                             }

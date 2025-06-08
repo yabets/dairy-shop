@@ -1,7 +1,5 @@
-mod models;
-mod parser;
-
-use models::{Herd, Stock};
+use dairyshop::models::{Herd, Stock};
+use dairyshop::parser;
 use std::env;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
