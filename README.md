@@ -1,6 +1,6 @@
 # DairyShop
 
-A simple Rust command-line application and library for calculating milk and wool stock from a herd of yaks. It parses an XML file describing the herd and simulates production over a number of days.
+A simple Rust "Hello, World!" application serving as a project scaffolding.
 
 ## Building
 
@@ -12,28 +12,41 @@ cargo build --release
 
 ## Running
 
-The executable expects two arguments: the path to an XML file describing the herd and the number of days that have elapsed since the shop opened.
+Run without arguments for the default greeting:
 
 ```bash
-cargo run -- <HERD_XML_FILE> <DAYS_ELAPSED>
+cargo run
 ```
 
-Example using the test data:
+Output:
+
+```
+Hello, World!
+```
+
+Or pass a name as an argument:
 
 ```bash
-cargo run -- tests/herd.xml 13
+cargo run -- Alice
 ```
 
-which prints output similar to:
+Output:
 
 ```
-In Stock:
-  1104.480 liters of milk
-  3 skins of wool
-Herd:
-  Betty-1 4.13 years old
-  Betty-2 8.13 years old
-  Betty-3 9.63 years old
+Hello, Alice!
+```
+
+## Project Structure
+
+```
+src/
+  main.rs    - CLI entry point
+  lib.rs     - Library root with a convenience `hello()` function
+  models.rs  - `Greeting` struct and message formatting
+  parser.rs  - Input parsing utilities
+tests/
+  models.rs  - Unit tests for the Greeting model
+  parser.rs  - Unit and CLI integration tests for parsing
 ```
 
 ## Testing
